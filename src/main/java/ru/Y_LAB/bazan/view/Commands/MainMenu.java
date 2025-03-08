@@ -13,6 +13,7 @@ public class MainMenu {
         if (!isLoggedIn) {
             commandsList.add(new RegisterUser(consoleUI));
             commandsList.add(new LoginUser(consoleUI));
+            commandsList.add(new ShowAllUsers(consoleUI));
         } else {
             //commandsList.add(new AddTransactionCommand(consoleUI));
             //commandsList.add(new ViewTransactionsCommand(consoleUI));
@@ -30,7 +31,7 @@ public class MainMenu {
 
     public String menu() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Выберите действие:\n");
+        stringBuilder.append("Choose action:\n");
         for (int i = 0; i < commandsList.size(); i++) {
             stringBuilder.append(i + 1);
             stringBuilder.append(". ");
@@ -45,7 +46,7 @@ public class MainMenu {
             Commands commands = commandsList.get(choice - 1);
             commands.execute();
         } else {
-            System.out.println("Неверный выбор.");
+            System.out.println("incorrect choice");
         }
     }
 

@@ -91,6 +91,10 @@ public class ConsoleUI implements View{
         }
     }
 
+    public void ShowAllUsers() {
+        System.out.println(userMap.keySet());
+    }
+
 
     public boolean isLoggedIn() {
         return currentUser != null;

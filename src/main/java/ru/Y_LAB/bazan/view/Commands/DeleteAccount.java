@@ -5,7 +5,7 @@ import ru.Y_LAB.bazan.view.ConsoleUI;
 public class DeleteAccount extends Commands {
 
     public DeleteAccount(ConsoleUI consoleUI) {
-        super(consoleUI, "Удалить аккаунт");
+        super(consoleUI, "Delete Account");
     }
     @Override
     void execute() {

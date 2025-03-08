@@ -1,12 +1,23 @@
 package ru.Y_LAB.bazan.model.User;
 
+/**
+ * Класс описывающий сущность Пользователь;
+ */
 public class User {
-
+    /**
+     * Переменные класса User;
+     */
     private String name;
     private String email;
     private String password;
     private int id;
 
+    /**
+     * Конструктор класса User
+     * @param name - имя пользователя;
+     * @param password - пароль пользователя;
+     * @param email - email пользователя;
+     */
     public User(String name, String password, String email) {
         this.name = name;
         this.email = email;
@@ -14,6 +25,9 @@ public class User {
         this.id = id;
     }
 
+    /**
+     * Геттеры и сеттеры для приватных переменных;
+     */
     public String getName() {
         return name;
     }

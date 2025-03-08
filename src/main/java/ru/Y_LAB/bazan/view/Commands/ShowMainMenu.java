@@ -4,7 +4,7 @@ import ru.Y_LAB.bazan.view.ConsoleUI;
 
 public class ShowMainMenu extends Commands {
     public ShowMainMenu(ConsoleUI consoleUI) {
-        super(consoleUI, "Показать главное меню");
+        super(consoleUI, "Show Main Menu");
     }
 
     @Override
