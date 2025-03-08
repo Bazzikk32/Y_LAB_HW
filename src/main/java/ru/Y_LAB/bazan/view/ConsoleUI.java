@@ -1,8 +1,10 @@
 package ru.Y_LAB.bazan.view;
 
+import ru.Y_LAB.bazan.model.User.User;
 import ru.Y_LAB.bazan.view.Commands.MainMenu;
 
-import java.security.Provider;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
@@ -10,13 +12,16 @@ public class ConsoleUI implements View{
     private Scanner scanner;
     private boolean work;
     private MainMenu mainMenu;
-    private Provider.Service service;
-    private Object currentUser;
+    private User currentUser = null;
+    private final Map<String, User> userMap = new HashMap<>(); // Хранение пользователей (email -> User)
+
+
 
     public ConsoleUI() {
+
         scanner = new Scanner(System.in);
         work = true;
-
+        mainMenu = new MainMenu(this, isLoggedIn());
     }
 
     @Override
@@ -53,9 +58,44 @@ public class ConsoleUI implements View{
         work = false;
     }
 
+    public void registerUser() {
+        System.out.println("Введите email:");
+        String email = scanner.nextLine();
+        if (userMap.containsKey(email)) {
+            System.out.println("Этот email уже зарегистрирован.");
+            return;
+        }
+
+        System.out.println("Введите пароль:");
+        String password = scanner.nextLine();
+        System.out.println("Введите имя:");
+        String name = scanner.nextLine();
+
+        User newUser = new User(email, password, name);
+        userMap.put(email, newUser);
+        System.out.println("Регистрация успешна!");
+    }
+
+    public void loginUser() {
+        System.out.println("Введите email:");
+        String email = scanner.nextLine();
+        System.out.println("Введите пароль:");
+        String password = scanner.nextLine();
+
+        User user = userMap.get(email);
+        if (user != null && user.getPassword().equals(password)) {
+            currentUser = user;
+            System.out.println("Вход выполнен, " + currentUser.getName() + "!");
+        } else {
+            System.out.println("Неверный email или пароль.");
+        }
+    }
+
+
     public boolean isLoggedIn() {
         return currentUser != null;
     }
+
 
     @Override
     public void printAnswer(String answer) {
