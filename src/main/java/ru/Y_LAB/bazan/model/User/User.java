@@ -10,7 +10,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private int id;
+
 
     /**
      * Конструктор класса User
@@ -22,7 +22,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.id = id;
+
     }
 
     /**
@@ -54,11 +54,5 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

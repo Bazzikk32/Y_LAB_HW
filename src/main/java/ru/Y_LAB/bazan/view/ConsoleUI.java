@@ -5,6 +5,12 @@ import ru.Y_LAB.bazan.view.Commands.MainMenu;
 
 import java.util.*;
 
+/**
+ * ConsoleUI выполняет интерфейс View и отвечает за взаимодействие с пользователем
+ * в консольном приложении, позволяя выполнять операции, такие как регистрация,
+ * вход в систему, и другие действия.
+ */
+
 public class ConsoleUI implements View{
 
     private Scanner scanner;
@@ -17,6 +23,10 @@ public class ConsoleUI implements View{
     private final Map<String, User> userMap = new HashMap<>(); // Хранение пользователей (email -> User)
     private List<String> blockUserList = new ArrayList<String>();
 
+    /**
+     * Конструктор класса ConsoleUI.
+     * Инициализирует сканер, флаг работы и главное меню.
+     */
 
     public ConsoleUI() {
 
@@ -25,6 +35,11 @@ public class ConsoleUI implements View{
         mainMenu = new MainMenu(this, isLoggedIn(), adminMode);
 
     }
+
+    /**
+     * Запускает основной цикл приложения, отображает меню и
+     * обрабатывает выбор пользователя.
+     */
 
     @Override
     public void start() {
@@ -37,10 +52,18 @@ public class ConsoleUI implements View{
                 int choice = Integer.parseInt(choiceStr);
                 mainMenu.execute(choice);
             } else {
-                System.out.println("Некорректный ввод. Пожалуйста, введите число от 1 до " + mainMenu.size());
+                System.out.println("Incorrect input. Please input a figure from 1 till " + mainMenu.size());
             }
         }
     }
+
+    /**
+     * Проверяет, является ли введенный выбор действительным номером
+     * в пределах доступного меню.
+     *
+     * @param choiceStr Строка, содержащая выбор пользователя.
+     * @return true, если выбор действителен, false в противном случае.
+     */
 
     public boolean checkChoice(String choiceStr) {
         if (choiceStr.matches("[0-9]+")) { // Проверить, что это число
@@ -51,14 +74,27 @@ public class ConsoleUI implements View{
         }
     }
 
+    /**
+     * Завершает работу приложения.
+     */
+
     public void end() {
         work = false;
     }
+
+    /**
+     * Завершает сессию пользователя и отображает прощальное сообщение.
+     */
 
     private void finish() {
         System.out.println("See you soon!");
         work = false;
     }
+
+    /**
+     * Регистрация нового пользователя.
+     * Запрашивает у пользователя email, пароль и имя.
+     */
 
     public void registerUser() {
         System.out.println("Input an email:");
@@ -78,6 +114,11 @@ public class ConsoleUI implements View{
         System.out.println("Registration is complete!");
     }
 
+    /**
+     * Вход пользователя в систему.
+     * Запрашивает email и пароль, проверяет их корректность.
+     */
+
     public void loginUser() {
         System.out.println("Input an email:");
         String email = scanner.nextLine();
@@ -96,15 +137,29 @@ public class ConsoleUI implements View{
         }
     }
 
+    /**
+     * Отображает всех зарегистрированных пользователей.
+     */
+
     public void showAllUsers() {
         System.out.println(userMap.keySet());
     }
 
+    /**
+     * Проверяет, вошел ли пользователь в систему.
+     *
+     * @return true, если пользователь вошел в систему, false в противном случае.
+     */
 
     public boolean isLoggedIn() {
 
         return currentUser != null;
     }
+
+    /**
+     * Вход администратора в систему.
+     * Запрашивает логин и пароль администратора которые установлены как DEFAULT.
+     */
 
     public void loginAdmin() {
 
@@ -131,21 +186,21 @@ public class ConsoleUI implements View{
      */
     public void editProfile() {
         if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы редактировать профиль.");
+            System.out.println("Please login first!");
             return;
         }
 
-        System.out.println("Введите новое имя (или оставьте пустым, чтобы не менять):");
+        System.out.println("Please input new login):");
         String newName = scanner.nextLine();
         if (!newName.isEmpty()) {
             currentUser.setName(newName);
         }
 
-        System.out.println("Введите новый email (или оставьте пустым, чтобы не менять):");
+        System.out.println("Please input new email:");
         String newEmail = scanner.nextLine();
         if (!newEmail.isEmpty()) {
             if (userMap.containsKey(newEmail)) {
-                System.out.println("Этот email уже зарегистрирован.");
+                System.out.println("This email already exists!");
                 return;
             }
             userMap.remove(currentUser.getEmail());
@@ -153,13 +208,13 @@ public class ConsoleUI implements View{
             userMap.put(newEmail, currentUser);
         }
 
-        System.out.println("Введите новый пароль (или оставьте пустым, чтобы не менять):");
+        System.out.println("Input new password:):");
         String newPassword = scanner.nextLine();
         if (!newPassword.isEmpty()) {
             currentUser.setPassword(newPassword);
         }
 
-        System.out.println("Профиль обновлен!");
+        System.out.println("Account have been updated!");
     }
 
     /**
@@ -169,25 +224,25 @@ public class ConsoleUI implements View{
      */
     public void deleteAccount() {
         if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы удалить аккаунт.");
+            System.out.println("Please login first!");
             return;
         }
 
-        System.out.println("Вы уверены, что хотите удалить аккаунт? (да/нет)");
+        System.out.println("Are you sure you want to delete this account? (yes/no");
         String confirmation = scanner.nextLine();
-        if (confirmation.equalsIgnoreCase("да")) {
+        if (confirmation.equalsIgnoreCase("yes")) {
             userMap.remove(currentUser.getEmail());
             currentUser = null;
-            System.out.println("Аккаунт удален.");
+            System.out.println("Account has been deleted!");
         } else {
-            System.out.println("Удаление отменено.");
+            System.out.println("Canceled");
         }
     }
 
     /**
-     * Позволяет пользователю удалить свой аккаунт.
+     * Позволяет пользователю удалить аккаунт под администратором.
      * Запрашивает подтверждение удаления аккаунта. Если пользователь подтверждает удаление,
-     * то аккаунт удаляется из хранилища `users`, а текущий пользователь (`currentUser`) становится `null`.
+     * то аккаунт удаляется из хранилища.
      */
     public void deleteAccountByAdmin() {
         System.out.println("Input USERname wich would like to DELETE");
@@ -222,11 +277,22 @@ public class ConsoleUI implements View{
         }
     }
 
+    /**
+     * Выводит ответ на экран.
+     *
+     * @param answer Строка, которая будет выведена в консоль.
+     */
 
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
     }
+    /**
+     * Блокирует аккаунт пользователя административным путем.
+     * Запрашивает имя пользователя для блока.
+     * После подтверждения блокирует аккаунт, добавляя его в список заблокированных
+     * пользователей.
+     */
 
     public void blockAccountByAdmin() {
         System.out.println("Input USERname wich would like to BAN");
@@ -242,7 +308,11 @@ public class ConsoleUI implements View{
             }
         }
     }
-
+    /**
+     * Возвращает состояние администраторского режима на главное меню.
+     *
+     * @return true, если администраторский режим был выключен.
+     */
     public boolean backToMainMenu() {
         return adminMode = false;
     }

@@ -8,6 +8,6 @@ public class Transaction {
     private String userEmail;
     private double amount;
     private String description;
-    private ListOfExpenses expenses;
+    private Category expenses;
     private LocalDate date;
 }

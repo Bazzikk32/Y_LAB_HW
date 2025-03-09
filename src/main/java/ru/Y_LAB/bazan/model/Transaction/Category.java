@@ -1,6 +1,6 @@
 package ru.Y_LAB.bazan.model.Transaction;
 
-public enum ListOfExpenses {
+public enum Category {
     INCOME,
     FOOD,
     TRANSPORT,
