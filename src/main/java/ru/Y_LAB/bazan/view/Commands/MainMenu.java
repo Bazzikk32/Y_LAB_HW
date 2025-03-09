@@ -8,17 +8,18 @@ import java.util.List;
 public class MainMenu {
     List<Commands> commandsList;
 
-    public MainMenu(ConsoleUI consoleUI, boolean isLoggedIn) {
+    public MainMenu(ConsoleUI consoleUI, boolean isLoggedIn, boolean adminMode) {
         commandsList = new ArrayList<>();
 
 
-        if (!isLoggedIn) {
+        if (!isLoggedIn && adminMode==false) {
             commandsList.add(new RegisterUser(consoleUI));
             commandsList.add(new LoginUser(consoleUI));
             commandsList.add(new AdminLogin(consoleUI));
-            //commandsList.add(new ShowAllUsers(consoleUI));
-        }
-        else {
+
+        } else if (adminMode==true) {
+            commandsList.add(new ShowAllUsers(consoleUI));
+        } else {
             //commandsList.add(new AddTransactionCommand(consoleUI));
             //commandsList.add(new ViewTransactionsCommand(consoleUI));
             commandsList.add(new EditProfile(consoleUI));
