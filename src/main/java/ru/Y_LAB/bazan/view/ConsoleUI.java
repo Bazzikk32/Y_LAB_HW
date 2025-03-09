@@ -99,19 +99,45 @@ public class ConsoleUI implements View{
     public void registerUser() {
         System.out.println("Input an email:");
         String email = scanner.nextLine();
+
         if (userMap.containsKey(email)) {
             System.out.println("This email already exists!");
             return;
         }
 
+        if (!isEmailValid(email)) {
+            System.out.println("Invalid email!");
+            return;
+        }
+
         System.out.println("Input password:");
         String password = scanner.nextLine();
+
         System.out.println("Input username:");
         String name = scanner.nextLine();
 
         User newUser = new User(email, password, name);
         userMap.put(email, newUser);
         System.out.println("Registration is complete!");
+    }
+
+    /**
+     * Проверяет, является ли заданный email адрес валидным.
+     *
+     * Метод использует регулярное выражение для проверки формата email.
+     * Формат правильного email следующи:
+     * - Содержит символы word (`a-z`, `A-Z`, `0-9`, `_`, `-`, `.`) до символа `@`.
+     * - Затем следует символ `@`.
+     * - Далее должны быть символы word, возможно содержащие `-`.
+     * - После этого может следовать один или несколько поддоменов, разделенных `.`.
+     * - В конце должен быть домен верхнего уровня, состоящий только из букв и длиной не менее 2 символов.
+     *
+     * @param email строка, представляющая email адрес, который необходимо проверить.
+     * @return true, если email валиден, false в противном случае.
+     */
+
+    public static boolean isEmailValid(String email) {
+        return email.matches("^[\\w-\\.]+@[\\w-]+(\\.[\\w-]+)*\\.[a-z]{2,}$");
     }
 
     /**
