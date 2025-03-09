@@ -184,6 +184,28 @@ public class ConsoleUI implements View{
     }
 
     /**
+     * Позволяет пользователю удалить свой аккаунт.
+     * Запрашивает подтверждение удаления аккаунта. Если пользователь подтверждает удаление,
+     * то аккаунт удаляется из хранилища `users`, а текущий пользователь (`currentUser`) становится `null`.
+     */
+    public void deleteAccountByAdmin() {
+        System.out.println("Input USERname wich would like to DELETE");
+        String userNameForDelete = scanner.nextLine();
+        if (userMap.containsKey(userNameForDelete)) {
+            System.out.println("Are you shure delete an account? (yes/no)");
+            String confirmation = scanner.nextLine();
+            if (confirmation.equalsIgnoreCase("yes")) {
+                userMap.remove(userNameForDelete);
+                System.out.println("Account have been deleted.");
+            } else {
+                System.out.println("Canceled");
+            }
+        }
+
+
+    }
+
+    /**
      * Отображает главное меню.
      * Выводит приветствие для залогиненного пользователя или предлагает войти/зарегистрироваться,
      * если пользователь не залогинен.

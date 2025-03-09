@@ -19,6 +19,7 @@ public class MainMenu {
 
         } else if (adminMode==true) {
             commandsList.add(new ShowAllUsers(consoleUI));
+            commandsList.add(new DeleteAccountByAdmin(consoleUI));
         } else {
             //commandsList.add(new AddTransactionCommand(consoleUI));
             //commandsList.add(new ViewTransactionsCommand(consoleUI));
