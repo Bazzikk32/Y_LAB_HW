@@ -10,11 +10,15 @@ public class MainMenu {
 
     public MainMenu(ConsoleUI consoleUI, boolean isLoggedIn) {
         commandsList = new ArrayList<>();
+
+
         if (!isLoggedIn) {
             commandsList.add(new RegisterUser(consoleUI));
             commandsList.add(new LoginUser(consoleUI));
-            commandsList.add(new ShowAllUsers(consoleUI));
-        } else {
+            commandsList.add(new AdminLogin(consoleUI));
+            //commandsList.add(new ShowAllUsers(consoleUI));
+        }
+        else {
             //commandsList.add(new AddTransactionCommand(consoleUI));
             //commandsList.add(new ViewTransactionsCommand(consoleUI));
             commandsList.add(new EditProfile(consoleUI));

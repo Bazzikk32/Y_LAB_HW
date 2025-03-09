@@ -9,6 +9,6 @@ public class ShowAllUsers extends Commands {
     }
     @Override
     void execute() {
-        getConsoleUI().ShowAllUsers();
+        getConsoleUI().showAllUsers();
     }
 }

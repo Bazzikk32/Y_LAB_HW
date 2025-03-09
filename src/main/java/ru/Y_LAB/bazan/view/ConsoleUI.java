@@ -1,6 +1,7 @@
 package ru.Y_LAB.bazan.view;
 
 import ru.Y_LAB.bazan.model.User.User;
+import ru.Y_LAB.bazan.view.Commands.AdminMenu;
 import ru.Y_LAB.bazan.view.Commands.MainMenu;
 
 import java.util.HashMap;
@@ -12,7 +13,10 @@ public class ConsoleUI implements View{
     private Scanner scanner;
     private boolean work;
     private MainMenu mainMenu;
+    private AdminMenu adminMenu;
     private User currentUser = null;
+    private static final String ADMIN_LOGIN = "admin";
+    private static final String ADMIN_PASSWORD = "admin";
     private final Map<String, User> userMap = new HashMap<>(); // Хранение пользователей (email -> User)
 
 
@@ -22,6 +26,8 @@ public class ConsoleUI implements View{
         scanner = new Scanner(System.in);
         work = true;
         mainMenu = new MainMenu(this, isLoggedIn());
+        adminMenu = new AdminMenu(this);
+
     }
 
     @Override
@@ -91,13 +97,30 @@ public class ConsoleUI implements View{
         }
     }
 
-    public void ShowAllUsers() {
+    public void showAllUsers() {
         System.out.println(userMap.keySet());
     }
 
 
     public boolean isLoggedIn() {
+
         return currentUser != null;
+    }
+
+    public void loginAdmin() {
+
+        System.out.println("Input ADMIN login:");
+        String loginAdmin = scanner.nextLine();
+        System.out.println("Input ADMIN password:");
+        String passwordAdmin = scanner.nextLine();
+
+        if (loginAdmin.equals(ADMIN_LOGIN) && passwordAdmin.equals(ADMIN_PASSWORD)) {
+
+            System.out.println("Welcome, ADMIN!");
+        } else {
+            System.out.println("Incorrect LOGIN or PASSWORD!");
+        }
+        System.out.println("Привет");
     }
 
 
