@@ -20,11 +20,16 @@ public class MainMenu {
         } else if (adminMode==true) {
             commandsList.add(new ShowAllUsers(consoleUI));
             commandsList.add(new DeleteAccountByAdmin(consoleUI));
+            commandsList.add(new BlockAccountByAdmin(consoleUI));
+            commandsList.add(new BackToMainMenu(consoleUI));
+
         } else {
             //commandsList.add(new AddTransactionCommand(consoleUI));
             //commandsList.add(new ViewTransactionsCommand(consoleUI));
             commandsList.add(new EditProfile(consoleUI));
             commandsList.add(new DeleteAccount(consoleUI));
+            commandsList.add(new ShowMainMenu(consoleUI));
+
             //commandsList.add(new ShowStatisticsCommand(consoleUI));
             //commandsList.add(new UpdateTransaction(consoleUI));
 

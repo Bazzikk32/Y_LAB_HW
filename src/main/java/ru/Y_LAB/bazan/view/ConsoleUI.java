@@ -3,9 +3,7 @@ package ru.Y_LAB.bazan.view;
 import ru.Y_LAB.bazan.model.User.User;
 import ru.Y_LAB.bazan.view.Commands.MainMenu;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleUI implements View{
 
@@ -17,7 +15,7 @@ public class ConsoleUI implements View{
     private static final String ADMIN_PASSWORD = "admin";
     private boolean adminMode = false;
     private final Map<String, User> userMap = new HashMap<>(); // Хранение пользователей (email -> User)
-
+    private List<String> blockUserList = new ArrayList<String>();
 
 
     public ConsoleUI() {
@@ -58,40 +56,43 @@ public class ConsoleUI implements View{
     }
 
     private void finish() {
-        System.out.println("До новых встреч!!!");
+        System.out.println("See you soon!");
         work = false;
     }
 
     public void registerUser() {
-        System.out.println("Введите email:");
+        System.out.println("Input an email:");
         String email = scanner.nextLine();
         if (userMap.containsKey(email)) {
-            System.out.println("Этот email уже зарегистрирован.");
+            System.out.println("This email already exists!");
             return;
         }
 
-        System.out.println("Введите пароль:");
+        System.out.println("Input password:");
         String password = scanner.nextLine();
-        System.out.println("Введите имя:");
+        System.out.println("Input username:");
         String name = scanner.nextLine();
 
         User newUser = new User(email, password, name);
         userMap.put(email, newUser);
-        System.out.println("Регистрация успешна!");
+        System.out.println("Registration is complete!");
     }
 
     public void loginUser() {
-        System.out.println("Введите email:");
+        System.out.println("Input an email:");
         String email = scanner.nextLine();
-        System.out.println("Введите пароль:");
+        System.out.println("Input a password:");
         String password = scanner.nextLine();
 
         User user = userMap.get(email);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password) && !blockUserList.contains(email)) {
             currentUser = user;
-            System.out.println("Вход выполнен, " + currentUser.getName() + "!");
-        } else {
-            System.out.println("Неверный email или пароль.");
+            System.out.println("Yuo have been login, " + currentUser.getName() + "!");
+        } else if (user != null && user.getPassword().equals(password) && blockUserList.contains(email)) {
+            System.out.println("Your account, have been blocked!");
+        } else
+        {
+            System.out.println("Incorrect email or password.");
         }
     }
 
@@ -211,9 +212,11 @@ public class ConsoleUI implements View{
      * если пользователь не залогинен.
      */
     public void showMainMenu() {
-        if (currentUser != null) {
+        if (currentUser != null && !blockUserList.contains(currentUser.getEmail())) {
             System.out.println("Добро пожаловать, " + currentUser.getName() + "!");
 
+        } else if (blockUserList.contains(currentUser.getEmail())) {
+            System.out.println("User, " + currentUser.getEmail() + "Have been blocked!");
         } else {
             System.out.println("Пожалуйста, войдите или зарегистрируйтесь.");
         }
@@ -223,5 +226,24 @@ public class ConsoleUI implements View{
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
+    }
+
+    public void blockAccountByAdmin() {
+        System.out.println("Input USERname wich would like to BAN");
+        String userNameForBan = scanner.nextLine();
+        if (userMap.containsKey(userNameForBan)) {
+            System.out.println("Are you sure to block an account? (yes/no)");
+            String confirmation = scanner.nextLine();
+            if (confirmation.equalsIgnoreCase("yes")) {
+                blockUserList.add(userNameForBan);
+                System.out.println("Account have been blocked.");
+            } else {
+                System.out.println("Canceled");
+            }
+        }
+    }
+
+    public boolean backToMainMenu() {
+        return adminMode = false;
     }
 }
