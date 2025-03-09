@@ -9,6 +9,6 @@ public class EditProfile extends Commands {
 
     @Override
     void execute() {
-
+        getConsoleUI().editProfile();
     }
 }

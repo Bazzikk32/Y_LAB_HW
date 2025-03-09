@@ -122,6 +122,67 @@ public class ConsoleUI implements View{
         System.out.println("Привет");
     }
 
+    /**
+     * Позволяет пользователю редактировать свой профиль.
+     * Запрашивает у пользователя новое имя, email и пароль. Если пользователь вводит значение,
+     * то соответствующее поле профиля обновляется. Перед обновлением email проверяется,
+     * не занят ли он другим пользователем.
+     */
+    public void editProfile() {
+        if (currentUser == null) {
+            System.out.println("Пожалуйста, войдите в систему, чтобы редактировать профиль.");
+            return;
+        }
+
+        System.out.println("Введите новое имя (или оставьте пустым, чтобы не менять):");
+        String newName = scanner.nextLine();
+        if (!newName.isEmpty()) {
+            currentUser.setName(newName);
+        }
+
+        System.out.println("Введите новый email (или оставьте пустым, чтобы не менять):");
+        String newEmail = scanner.nextLine();
+        if (!newEmail.isEmpty()) {
+            if (userMap.containsKey(newEmail)) {
+                System.out.println("Этот email уже зарегистрирован.");
+                return;
+            }
+            userMap.remove(currentUser.getEmail());
+            currentUser.setEmail(newEmail);
+            userMap.put(newEmail, currentUser);
+        }
+
+        System.out.println("Введите новый пароль (или оставьте пустым, чтобы не менять):");
+        String newPassword = scanner.nextLine();
+        if (!newPassword.isEmpty()) {
+            currentUser.setPassword(newPassword);
+        }
+
+        System.out.println("Профиль обновлен!");
+    }
+
+    /**
+     * Позволяет пользователю удалить свой аккаунт.
+     * Запрашивает подтверждение удаления аккаунта. Если пользователь подтверждает удаление,
+     * то аккаунт удаляется из хранилища `users`, а текущий пользователь (`currentUser`) становится `null`.
+     */
+    public void deleteAccount() {
+        if (currentUser == null) {
+            System.out.println("Пожалуйста, войдите в систему, чтобы удалить аккаунт.");
+            return;
+        }
+
+        System.out.println("Вы уверены, что хотите удалить аккаунт? (да/нет)");
+        String confirmation = scanner.nextLine();
+        if (confirmation.equalsIgnoreCase("да")) {
+            userMap.remove(currentUser.getEmail());
+            currentUser = null;
+            System.out.println("Аккаунт удален.");
+        } else {
+            System.out.println("Удаление отменено.");
+        }
+    }
+
 
     @Override
     public void printAnswer(String answer) {
