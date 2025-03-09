@@ -183,6 +183,20 @@ public class ConsoleUI implements View{
         }
     }
 
+    /**
+     * Отображает главное меню.
+     * Выводит приветствие для залогиненного пользователя или предлагает войти/зарегистрироваться,
+     * если пользователь не залогинен.
+     */
+    public void showMainMenu() {
+        if (currentUser != null) {
+            System.out.println("Добро пожаловать, " + currentUser.getName() + "!");
+
+        } else {
+            System.out.println("Пожалуйста, войдите или зарегистрируйтесь.");
+        }
+    }
+
 
     @Override
     public void printAnswer(String answer) {

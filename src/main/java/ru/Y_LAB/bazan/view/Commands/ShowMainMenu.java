@@ -9,6 +9,6 @@ public class ShowMainMenu extends Commands {
 
     @Override
     void execute() {
-
+        getConsoleUI().showMainMenu();
     }
 }
