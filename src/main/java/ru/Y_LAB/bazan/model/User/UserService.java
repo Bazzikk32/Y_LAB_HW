@@ -18,12 +18,7 @@ public class UserService {
 
     public UserService() {
         scanner = new Scanner(System.in);
-        this.adminMode = false;
 
-    }
-
-    public boolean isAdminMode() {
-        return this.adminMode; // Возвращаем текущее состояние adminMode
     }
 
 
@@ -58,7 +53,6 @@ public class UserService {
     }
     /**
      * Проверяет, является ли заданный email адрес валидным.
-     *
      * Метод использует регулярное выражение для проверки формата email.
      * Формат правильного email следующи:
      * - Содержит символы word (`a-z`, `A-Z`, `0-9`, `_`, `-`, `.`) до символа `@`.
@@ -122,12 +116,16 @@ public class UserService {
         if (loginAdmin.equals(ADMIN_LOGIN) && passwordAdmin.equals(ADMIN_PASSWORD)) {
 
             System.out.println("Welcome, ADMIN!");
-            adminMode = true;
+            adminMode=true;
 
         } else {
             System.out.println("Incorrect LOGIN or PASSWORD!");
         }
 
+    }
+
+    public boolean isAdminMode() {
+        return adminMode;
     }
 
     /**
