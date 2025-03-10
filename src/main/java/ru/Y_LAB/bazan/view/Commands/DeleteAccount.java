@@ -27,6 +27,6 @@ public class DeleteAccount extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().deleteAccount();
+        getUserService().deleteAccount();
     }
 }

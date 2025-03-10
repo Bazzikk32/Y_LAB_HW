@@ -27,6 +27,6 @@ public class BackToMainMenu extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().backToMainMenu();
+        getUserService().backToMainMenu();
     }
 }

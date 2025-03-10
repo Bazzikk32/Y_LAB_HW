@@ -27,6 +27,6 @@ public class RegisterUser extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().registerUser();
+        getUserService().registerUser();
     }
 }

@@ -27,6 +27,6 @@ public class AdminLogin extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().loginAdmin();
+        getUserService().loginAdmin();
     }
 }

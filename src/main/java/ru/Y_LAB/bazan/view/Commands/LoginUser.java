@@ -27,6 +27,6 @@ public class LoginUser extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().loginUser();
+        getUserService().loginUser();
     }
 }

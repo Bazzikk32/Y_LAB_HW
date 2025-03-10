@@ -27,7 +27,7 @@ public class BlockAccountByAdmin extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().blockAccountByAdmin();
+        getUserService().blockAccountByAdmin();
     }
 }
 

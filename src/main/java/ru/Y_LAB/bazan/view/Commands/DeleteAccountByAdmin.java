@@ -28,6 +28,6 @@ public class DeleteAccountByAdmin extends Commands {
      */
     @Override
     void execute() {
-        getConsoleUI().deleteAccountByAdmin();
+        getUserService().deleteAccountByAdmin();
     }
 }
