@@ -40,39 +40,39 @@ public class TransactionService {
      * @param user Пользователь, которому принадлежит транзакция.
      */
     public void addTransaction(User user) {
-        System.out.println("Введите сумму транзакции:");
+        System.out.println("Insert a new transaction:");
         double amount;
         try {
             amount = Double.parseDouble(scanner.nextLine());
         } catch (NumberFormatException e) {
-            System.out.println("Некорректный формат суммы.");
+            System.out.println("Incorrect amount");
             return;
         }
 
-        System.out.println("Введите категорию (INCOME, FOOD, TRANSPORT, ENTERTAINMENT, OTHER):");
+        System.out.println("Input of category (INCOME, FOOD, TRANSPORT, ENTERTAINMENT, OTHER):");
         Category category;
         try {
             category = Category.valueOf(scanner.nextLine().toUpperCase());
         } catch (IllegalArgumentException e) {
-            System.out.println("Некорректная категория.");
+            System.out.println("Incorrect category.");
             return;
         }
 
-        System.out.println("Введите дату транзакции (YYYY-MM-DD):");
+        System.out.println("Input date of transaction (YYYY-MM-DD):");
         LocalDate date;
         try {
             date = LocalDate.parse(scanner.nextLine());
         } catch (java.time.format.DateTimeParseException e) {
-            System.out.println("Некорректный формат даты.");
+            System.out.println("Incorrect date format.");
             return;
         }
 
-        System.out.println("Введите описание транзакции:");
+        System.out.println("Add transaction description:");
         String description = scanner.nextLine();
 
         Transaction newTransaction = new Transaction(user.getEmail(), amount, description, category, date);
         transactions.add(newTransaction);
-        System.out.println("Транзакция добавлена!");
+        System.out.println("Transaction added!");
     }
 
     /**
@@ -83,36 +83,36 @@ public class TransactionService {
      * @param user Пользователь, которому принадлежит транзакция.
      */
     public void updateTransaction(User user) {
-        System.out.println("Введите id транзакции:");
+        System.out.println("Input ID of the transaction:");
         int id = Integer.parseInt(scanner.nextLine());
         for (Transaction transaction : transactions) {
             if (transaction.getId() == id) {
-                System.out.println("Введите новую сумму транзакции:");
+                System.out.println("Input amount of the transaction:");
                 double amount;
                 try {
                     amount = Double.parseDouble(scanner.nextLine());
                 } catch (NumberFormatException e) {
-                    System.out.println("Некорректный формат суммы.");
+                    System.out.println("Incorrect format of amount");
                     return;
                 }
-                System.out.println("Введите новую категорию (INCOME, FOOD, TRANSPORT, ENTERTAINMENT, OTHER) :");
+                System.out.println("Input new category (INCOME, FOOD, TRANSPORT, ENTERTAINMENT, OTHER) :");
                 Category category;
                 try {
                     category = Category.valueOf(scanner.nextLine().toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Некорректная категория.");
+                    System.out.println("Incorrect format of category.");
                     return;
                 }
-                System.out.println("Введите новую дату транзакции (YYYY-MM-DD):");
+                System.out.println("Input new date (YYYY-MM-DD):");
                 LocalDate date;
                 try {
                     date = LocalDate.parse(scanner.nextLine());
                 } catch (java.time.format.DateTimeParseException e) {
-                    System.out.println("Некорректный формат даты.");
+                    System.out.println("Incorrect date.");
                     return;
                 }
 
-                System.out.println("Введите новое описание транзакции:");
+                System.out.println("Please input new description:");
                 String description = scanner.nextLine();
                 Transaction newTransaction = new Transaction(user.getEmail(), amount, description, category, date);
                 transactions.set(id - 1, newTransaction);
@@ -123,7 +123,7 @@ public class TransactionService {
      * Удаляет транзакцию из списка по указанному номеру.
      */
     public void deleteTransaction() {
-        System.out.println("Введите номер транзакции , которую нужно удалить :");
+        System.out.println("Please input transaction id for deletion:");
         int id = Integer.parseInt(scanner.nextLine());
         for (Transaction transaction : transactions) {
             if (transaction.getId() == id) {
@@ -138,49 +138,25 @@ public class TransactionService {
      * @param currentUser Пользователь, транзакции которого нужно отобразить.
      */
     public void viewTransactions(User currentUser) {
-
         if (transactions.isEmpty()) {
-            System.out.println("Нет транзакций для отображения.");
+            System.out.println("No existing transactions");
             return;
         }
 
-        System.out.println("ID  |  Сумма  |  Категория  |  Дата  |  Описание");
-        System.out.println("----------------------------------------------------");
+        System.out.printf("%-10s %-10s %-15s %-10s %s%n", "ID", "Amount", "Category", "Date", "Description");
+        System.out.println("-------------------------------------------------------");
+
         for (Transaction transaction : transactions) {
-            if (transaction.getUserEmail().equals(currentUser.getEmail()))
-                System.out.printf("%-3d|  %-6.2f|  %-9s|  %-10s|  %s%n",
+            if (transaction.getUserEmail().equals(currentUser.getEmail())) {
+                System.out.printf("%-10d %-10.2f %-15s %-10s %s%n",
                         transaction.getId(),
                         transaction.getAmount(),
                         transaction.getCategory(),
                         transaction.getDate(),
                         transaction.getDescription());
+            }
         }
     }
-    /**
-     * Выводит статистику по транзакциям для указанного пользователя.
-     * Включает текущий баланс и анализ расходов по категориям.
-     *
-     * @param currentUser Пользователь, для которого нужно показать статистику.
-     */
-    public void showStatistics(User currentUser) {
-        if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы просмотреть статистику.");
-            return;
-        }
 
-        double balance = transactions.stream()
-                .filter(t -> t.getUserEmail().equals(currentUser.getEmail()))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
-        System.out.println("Текущий баланс: " + balance);
-
-        Map<Category, Double> expensesByCategory = transactions.stream()
-                .filter(t -> t.getUserEmail().equals(currentUser.getEmail()) && t.getAmount() < 0)
-                .collect(Collectors.groupingBy(Transaction::getCategory, Collectors.summingDouble(Transaction::getAmount)));
-
-        System.out.println("Анализ расходов по категориям:");
-        expensesByCategory.forEach((category, amount) -> System.out.println(category + ": " + amount));
-
-    }
 
 }

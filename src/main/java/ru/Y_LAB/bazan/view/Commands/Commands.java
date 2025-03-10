@@ -1,5 +1,6 @@
 package ru.Y_LAB.bazan.view.Commands;
 
+import ru.Y_LAB.bazan.model.Transaction.TransactionService;
 import ru.Y_LAB.bazan.view.ConsoleUI;
 
 /**
@@ -8,10 +9,12 @@ import ru.Y_LAB.bazan.view.ConsoleUI;
 public abstract class Commands {
     private ConsoleUI consoleUI;
     private String description;
+    private TransactionService transactionService;
 
     public Commands(ConsoleUI consoleUI, String description) {
         this.consoleUI = consoleUI;
         this.description = description;
+        this.transactionService = new TransactionService();
     }
 
     abstract void execute();
@@ -22,5 +25,9 @@ public abstract class Commands {
 
     public ConsoleUI getConsoleUI() {
         return consoleUI;
+    }
+
+    public TransactionService getTransactionService() {
+        return transactionService;
     }
 }

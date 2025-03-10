@@ -296,12 +296,12 @@ public class ConsoleUI implements View{
      */
     public void showMainMenu() {
         if (currentUser != null && !blockUserList.contains(currentUser.getEmail())) {
-            System.out.println("Добро пожаловать, " + currentUser.getName() + "!");
+            System.out.println("Welcome, " + currentUser.getName() + "!");
 
         } else if (blockUserList.contains(currentUser.getEmail())) {
             System.out.println("User, " + currentUser.getEmail() + "Have been blocked!");
         } else {
-            System.out.println("Пожалуйста, войдите или зарегистрируйтесь.");
+            System.out.println("Please login first!");
         }
     }
 
@@ -352,25 +352,23 @@ public class ConsoleUI implements View{
      */
     public void addTransaction() {
         if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы добавить транзакцию.");
+            System.out.println("Please login first!");
             return;
         }
         transactionService.addTransaction(currentUser);
-        //checkBudget();
+
     }
 
     /**
      * Обновляет существующую транзакцию.
      * Вызывает метод `updateTransaction` из `transactionService` для обновления транзакции
-     * и затем вызывает метод `checkBudget` для проверки бюджета. Требует, чтобы был залогинен текущий пользователь.
      */
     public void updateTransaction() {
         if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы обновить транзакцию.");
+            System.out.println("Please login first!");
             return;
         }
         transactionService.updateTransaction(currentUser);
-        //checkBudget();
     }
     /**
      * Удаляет транзакцию для текущего пользователя.
@@ -379,7 +377,7 @@ public class ConsoleUI implements View{
      */
     public void deleteTransaction() {
         if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы обновить транзакцию.");
+            System.out.println("Please login first!");
             return;
         }
         transactionService.deleteTransaction();
@@ -392,7 +390,7 @@ public class ConsoleUI implements View{
      */
     public void viewTransactions() {
         if (currentUser == null) {
-            System.out.println("Пожалуйста, войдите в систему, чтобы просмотреть транзакции.");
+            System.out.println("Please login first!");
             return;
         }
         transactionService.viewTransactions(currentUser);
