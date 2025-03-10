@@ -11,3 +11,5 @@ public class Transaction {
     private Category expenses;
     private LocalDate date;
 }
+
+
