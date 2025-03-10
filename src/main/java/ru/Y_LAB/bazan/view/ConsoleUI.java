@@ -396,10 +396,19 @@ public class ConsoleUI implements View{
         transactionService.viewTransactions(currentUser);
     }
 
-    /**
-     * Позволяет пользователю редактировать свой профиль.
-     * Запрашивает у пользователя новое имя, email и пароль. Если пользователь вводит значение,
-     * то соответствующее поле профиля обновляется. Перед обновлением email проверяется,
-     * не занят ли он другим пользователем.
-     */
+    public void unblockAccountByAdmin() {
+        System.out.println("Input USERname wich would like to UNBAN");
+        String userNameForUnban = scanner.nextLine();
+        if (userMap.containsKey(userNameForUnban)) {
+            System.out.println("Are you sure to unban an account? (yes/no)");
+            String confirmation = scanner.nextLine();
+            if (confirmation.equalsIgnoreCase("yes")) {
+                blockUserList.remove(userNameForUnban);
+                System.out.println("Account have been unbanned.");
+            } else {
+                System.out.println("Canceled");
+            }
+        }
+    }
+
 }

@@ -33,6 +33,7 @@ public class MainMenu {
             commandsList.add(new ShowAllUsers(consoleUI));
             commandsList.add(new DeleteAccountByAdmin(consoleUI));
             commandsList.add(new BlockAccountByAdmin(consoleUI));
+            commandsList.add(new UnblockAccountByAdmin(consoleUI));
             commandsList.add(new BackToMainMenu(consoleUI));
         } else {
             commandsList.add(new EditProfile(consoleUI));
