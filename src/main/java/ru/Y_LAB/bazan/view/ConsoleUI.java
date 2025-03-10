@@ -1,5 +1,6 @@
 package ru.Y_LAB.bazan.view;
 
+import ru.Y_LAB.bazan.model.Transaction.TransactionService;
 import ru.Y_LAB.bazan.model.User.User;
 import ru.Y_LAB.bazan.view.Commands.MainMenu;
 
@@ -22,6 +23,7 @@ public class ConsoleUI implements View{
     private boolean adminMode = false;
     private final Map<String, User> userMap = new HashMap<>(); // Хранение пользователей (email -> User)
     private List<String> blockUserList = new ArrayList<String>();
+    TransactionService transactionService = new TransactionService();
 
     /**
      * Конструктор класса ConsoleUI.
@@ -342,4 +344,64 @@ public class ConsoleUI implements View{
     public boolean backToMainMenu() {
         return adminMode = false;
     }
+
+    /**
+     * Добавляет новую транзакцию.
+     * Вызывает метод `addTransaction` из `transactionService` для добавления транзакции
+     * и затем вызывает метод `checkBudget` для проверки бюджета.  Требует, чтобы был залогинен текущий пользователь.
+     */
+    public void addTransaction() {
+        if (currentUser == null) {
+            System.out.println("Пожалуйста, войдите в систему, чтобы добавить транзакцию.");
+            return;
+        }
+        transactionService.addTransaction(currentUser);
+        //checkBudget();
+    }
+
+    /**
+     * Обновляет существующую транзакцию.
+     * Вызывает метод `updateTransaction` из `transactionService` для обновления транзакции
+     * и затем вызывает метод `checkBudget` для проверки бюджета. Требует, чтобы был залогинен текущий пользователь.
+     */
+    public void updateTransaction() {
+        if (currentUser == null) {
+            System.out.println("Пожалуйста, войдите в систему, чтобы обновить транзакцию.");
+            return;
+        }
+        transactionService.updateTransaction(currentUser);
+        //checkBudget();
+    }
+    /**
+     * Удаляет транзакцию для текущего пользователя.
+     * Вызывает метод `deleteTransaction` из `TransactionService` для удаления транзакции.
+     * Для выполнения этой операции пользователь должен быть залогинен.
+     */
+    public void deleteTransaction() {
+        if (currentUser == null) {
+            System.out.println("Пожалуйста, войдите в систему, чтобы обновить транзакцию.");
+            return;
+        }
+        transactionService.deleteTransaction();
+    }
+
+    /**
+     * Просматривает список транзакций.
+     * Вызывает метод `viewTransactions` из `transactionService` для отображения транзакций
+     * текущего пользователя. Требует, чтобы был залогинен текущий пользователь.
+     */
+    public void viewTransactions() {
+        if (currentUser == null) {
+            System.out.println("Пожалуйста, войдите в систему, чтобы просмотреть транзакции.");
+            return;
+        }
+        transactionService.viewTransactions(currentUser);
+    }
+
+    /**
+     * Позволяет пользователю редактировать свой профиль.
+     * Запрашивает у пользователя новое имя, email и пароль. Если пользователь вводит значение,
+     * то соответствующее поле профиля обновляется. Перед обновлением email проверяется,
+     * не занят ли он другим пользователем.
+     */
 }

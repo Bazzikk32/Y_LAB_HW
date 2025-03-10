@@ -38,6 +38,9 @@ public class MainMenu {
             commandsList.add(new EditProfile(consoleUI));
             commandsList.add(new DeleteAccount(consoleUI));
             commandsList.add(new ShowMainMenu(consoleUI));
+            commandsList.add(new AddTransaction(consoleUI));
+            commandsList.add(new ViewTransaction(consoleUI));
+
         }
         commandsList.add(new End(consoleUI));
     }
