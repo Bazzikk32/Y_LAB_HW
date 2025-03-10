@@ -3,31 +3,31 @@ package ru.Y_LAB.bazan.view.Commands;
 import ru.Y_LAB.bazan.view.ConsoleUI;
 
 /**
- * Команда для блокировки аккаунта администратором.
- * Этот класс расширяет базовый класс Commands и отвечает за вызов метода
- * блокировки аккаунта в интерфейсе консоли по запросу администратора.
+ * Команда для разблокировки аккаунта администратором.
+ *
+ * Этот класс наследуется от класса {@link Commands} и переопределяет метод
+ * {@link #execute()}, чтобы выполнить логику разблокировки аккаунта
+ * с помощью экземпляра {@link ConsoleUI}.
  */
 public class UnblockAccountByAdmin extends Commands {
 
     /**
-     * Конструктор класса BlockAccountByAdmin.
+     * Конструктор для создания команды разблокировки аккаунта администратором.
      *
-     * @param consoleUI экземпляр ConsoleUI, используемый для взаимодействия
-     *                  с пользовательским интерфейсом.
+     * @param consoleUI экземпляр {@link ConsoleUI} для взаимодействия с пользовательским интерфейсом
      */
     public UnblockAccountByAdmin(ConsoleUI consoleUI) {
-        super(consoleUI, "Block Account");
+        super(consoleUI, "Unblock Account");
     }
 
     /**
-     * Выполняет команду блокировки аккаунта администратором.
+     * Выполняет команду разблокировки аккаунта администратором.
      *
-     * Этот метод вызывает метод blockAccountByAdmin() у экземпляра ConsoleUI,
-     * обеспечивая выполнение блокации аккаунта.
+     * Этот метод вызывает соответствующий метод
+     * {@link ConsoleUI#unblockAccountByAdmin()} для выполнения разблокировки.
      */
     @Override
     void execute() {
         getConsoleUI().unblockAccountByAdmin();
     }
 }
-
