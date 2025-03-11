@@ -1,5 +1,6 @@
 package ru.Y_LAB.bazan.view;
 
+import ru.Y_LAB.bazan.model.Budget.BudgetService;
 import ru.Y_LAB.bazan.model.Transaction.TransactionService;
 import ru.Y_LAB.bazan.model.User.User;
 import ru.Y_LAB.bazan.view.Commands.MainMenu;
@@ -24,6 +25,7 @@ public class ConsoleUI implements View{
     private final Map<String, User> userMap = new HashMap<>(); // Хранение пользователей (email -> User)
     private List<String> blockUserList = new ArrayList<String>();
     TransactionService transactionService = new TransactionService();
+    BudgetService budgetService = new BudgetService();
 
     /**
      * Конструктор класса ConsoleUI.
@@ -356,6 +358,15 @@ public class ConsoleUI implements View{
             return;
         }
         transactionService.addTransaction(currentUser);
+
+    }
+
+    public void addBudgetLimit() {
+        if (currentUser == null) {
+            System.out.println("Please login first!");
+            return;
+        }
+        budgetService.setMonthlyBudget(currentUser);
 
     }
 

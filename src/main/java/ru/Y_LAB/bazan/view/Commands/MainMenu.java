@@ -41,6 +41,7 @@ public class MainMenu {
             commandsList.add(new ShowMainMenu(consoleUI));
             commandsList.add(new AddTransaction(consoleUI));
             commandsList.add(new ViewTransaction(consoleUI));
+            commandsList.add(new AddBudgetLimit(consoleUI));
 
         }
         commandsList.add(new End(consoleUI));

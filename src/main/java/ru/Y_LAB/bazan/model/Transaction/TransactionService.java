@@ -39,6 +39,9 @@ public class TransactionService {
      *
      * @param user Пользователь, которому принадлежит транзакция.
      */
+
+
+
     public void addTransaction(User user) {
         System.out.println("Insert a new transaction:");
         double amount;
