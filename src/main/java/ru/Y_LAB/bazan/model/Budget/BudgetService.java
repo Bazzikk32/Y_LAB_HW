@@ -2,9 +2,12 @@ package ru.Y_LAB.bazan.model.Budget;
 
 import ru.Y_LAB.bazan.model.User.User;
 
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
+import java.time.Month;
 
 public class BudgetService {
 
@@ -62,6 +65,8 @@ public void setMonthlyBudget(User user) {
     if (monthNumber < 1 || monthNumber > 12) {
         System.out.println("❌ Неверные данные. Пожалуйста, введите номер месяца от 1 до 12.");
     } else {
+        Month month = Month.of(monthNumber);
+        String monthName = month.getDisplayName(TextStyle.FULL, new Locale("EN"));
         Budget budget = new Budget(budgetLimit, description, monthNumber, user.getEmail());
         budgetServiceList.add(budget);
         System.out.println("✅ Бюджет успешно добавлен.");
@@ -70,6 +75,7 @@ public void setMonthlyBudget(User user) {
         System.out.printf("💰 Бюджет: %.2f%n", budgetLimit);
         System.out.printf("📝 Описание: %s%n", description);
         System.out.printf("📅 Месяц: %d%n", monthNumber);
+        System.out.println("Месяц: " + monthName);
         System.out.println("====================================");
     }
 }
